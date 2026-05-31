@@ -1,7 +1,7 @@
 # ⚡ CraftNode Server Panel
 
 <p align="center">
-  <a href="#-繁體中文">繁體中文</a> | <a href="#-english">English</a>
+  <a href="README_EN.md">English Version</a>
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 我們為您提供了一鍵核心下載、內建 Modrinth 模組庫、即時玩家管理、圖形化屬性設定，以及無縫整合的 FRP 內網穿透互動介面，讓開服變得前所未有的簡單。
 
-> **📸 面板預覽** > 
+> **📸 面板預覽**
 > *(建議在此處插入一張面板首頁的截圖)*
 > `![Dashboard Screenshot](在此放入您的圖片網址)`
 
@@ -44,3 +44,40 @@
 ```bash
 git clone [https://github.com/YourUsername/CraftNode-Server-Panel.git](https://github.com/YourUsername/CraftNode-Server-Panel.git)
 cd CraftNode-Server-Panel
+```
+
+**2. 安裝依賴套件：**
+```bash
+pip install PySide6 requests psutil
+```
+
+**3. 啟動面板：**
+```bash
+python CraftNode.py
+```
+*(可選) 若要使用內網穿透功能，請自行下載 FRP 用戶端，並在面板中指定執行檔路徑。*
+
+### 📦 打包為獨立執行檔 (EXE)
+
+如果您希望將此面板打包為不需要安裝 Python 環境的 Windows 獨立執行檔 (`.exe`)，以便於分發或快速啟動，可以使用 **PyInstaller** 進行編譯：
+
+1. **安裝 PyInstaller：**
+   ```bash
+   pip install pyinstaller
+   ```
+
+2. **執行打包指令：**
+   在專案根目錄下執行以下指令：
+   ```bash
+   pyinstaller --noconsole --onefile --name="CraftNodePanel" CraftNode.py
+   ```
+   * **`--noconsole`**：隱藏後台的命令提示字元視窗，提供純粹的 GUI 圖形介面體驗。
+   * **`--onefile`**：將所有依賴庫與程式碼封裝進單一一個 `.exe` 檔案中。
+   * **`--name`**：指定輸出的執行檔名稱。
+
+3. **取得執行檔：**
+   打包完成後，您可以在專案目錄下新生成的 `dist/` 資料夾中找到 `CraftNodePanel.exe`。直接雙擊該執行檔即可獨立運作（首次執行同樣會自動建立 `servers/` 目錄與設定檔）。
+
+### 📜 開源聲明
+
+本專案為免費開源軟體，您可以自由修改原始碼以符合自身需求。**唯嚴禁將本軟體直接或變相作為私有商業專案進行販售獲利。**
