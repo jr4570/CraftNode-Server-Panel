@@ -18,9 +18,9 @@
 
 It features one-click core downloads, built-in Modrinth integration, live player management, GUI-based server properties, and native support for FRP network tunneling.
 
-> **📸 Dashboard Preview**
-> *(Insert a screenshot of the dashboard here)*
-> `![Dashboard Screenshot](Insert_Image_URL_Here)`
+### 📸 Dashboard Preview
+
+[![Dashboard Screenshot](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image2.png?raw=true)](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image2.png?raw=true)
 
 ### ✨ Features
 
