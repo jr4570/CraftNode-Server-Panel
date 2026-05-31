@@ -21,71 +21,52 @@ from PySide6.QtCore import Qt, QEvent, QTimer, QThread, Signal
 from PySide6.QtGui import QFont, QTextCursor, QAction
 
 # ==========================================
-# 0. 全域常數與設定檔
+# 全域常數與設定檔載入
 # ==========================================
 EULA_ZH_TEXT = """<div style='line-height: 1.6; font-size: 14px;'>
 <h2 style='color: #10B981;'>Minecraft 終端使用者授權合約（「EULA」）</h2>
 <h3 style='color: #3B82F6;'>摘要</h3>
-本 EULA 是您與我們（Mojang AB 和微軟公司，或在適用情況下，於下方公司資訊段落中列出的當地關係企業）之間的法律合約。您應該閱讀完整內容，但在此提供一些重要點的快速摘要以供參考——不過完整的條款與條件依然適用。<br>
+本 EULA 是您與我們（Mojang AB 和微軟公司）之間的法律合約。在此提供一些重要點的快速摘要以供參考：<br>
 • 本 Minecraft EULA 與微軟服務合約，共同適用於所有 Minecraft 服務。<br>
 • 您的內容屬於您自己，但請負責任且安全地分享。<br>
-• 我們的社群標準協助我們建立一個對所有人開放且安全的社群。<br>
-• 您可以開發工具、外掛程式（插件）與服務，只要它們看起來不像是官方的或未經我們核准即可（例如使用我們的標誌）。<br>
-• 未經我們許可，請勿散佈或將我們製作的任何內容用於商業用途。<br>
-• 我們正努力保持開放、誠實與信任，並希望您也以同樣的態度對待我們。<br><br>
-本 EULA 適用於所有 Minecraft 網站、軟體、體驗與服務（簡稱「服務」），但 Minecraft 商店 (Minecraft Shop) 與 Minecraft 教育版 (Minecraft Education) 除外，這兩者擁有各自獨立的條款。<br>
-
-<h3 style='color: #3B82F6;'>簡介</h3>
-如果您購買、下載或使用我們的任何服務，或者如果您點選接受本 EULA，即表示您同意本 Minecraft EULA 與微軟服務合約，因此請仔細閱讀。如果您是未成年人且在理解這些條款與條件時遇到困難，請尋求您的父母或法定監護人為您解釋。<br>
+• 您可以開發工具、外掛程式（插件）與服務，只要它們看起來不像是官方的即可。<br>
+• 未經我們許可，請勿散佈或將我們製作的任何內容用於商業用途。<br><br>
 
 <h3 style='color: #3B82F6;'>您對 Minecraft 軟體與內容可以做與不能做的事</h3>
 當您購買我們的遊戲時，這意味著您可以下載、安裝並遊玩它們。對於 Minecraft：Java 版的伺服器版本，您可以將其安裝在伺服器上並託管線上多人遊戲。<br>
-然而，除非我們特別同意，否則您絕不能散佈我們製作的任何內容。我們所謂的「散佈我們製作的任何內容」意思是：<br>
+然而，除非我們特別同意，否則您絕不能散佈我們製作的任何內容。包含：<br>
 • 將我們遊戲軟體或內容的副本給予任何其他人；<br>
-• 將我們製作的任何內容用於商業用途；<br>
-• 試圖從我們製作的任何內容中賺取金錢；或<br>
-• 讓其他人以不公平或不合理的方式取得我們製作的任何內容的存取權限。<br>
+• 將我們製作的任何內容用於商業用途或試圖賺取金錢；<br>
+• 讓其他人以不公平或不合理的方式取得遊戲存取權限。<br>
 
 <h3 style='color: #3B82F6;'>使用模組 (Mods)</h3>
-如果您購買了 Minecraft：Java 版，您可以透過加入修改、工具或外掛程式（我們統稱為「模組」）來遊玩與修改它。我們所謂的「模組」，是指您或其他人創作的「原創內容」，且不包含我們受版權保護的程式碼或內容的實質部分。當您將您的模組與 Minecraft 結合時，我們會將該結合體稱為遊戲的「模改版本」。您不得散佈我們遊戲或軟體的任何模改版本。<br>
+如果您購買了 Minecraft：Java 版，您可以透過加入修改、工具或外掛程式（「模組」）來修改它。您不得散佈我們遊戲或軟體的任何模改版本。<br>
 
 <h3 style='color: #3B82F6;'>MINECRAFT 社群標準</h3>
-作為 Xbox 遊戲工作室的一員，Mojang Studios 認同《Xbox 社群標準》，並要求所有參與 Minecraft 社群的玩家遵守這些標準。為了讓社群對每個人都保持熱情與包容，我們對仇恨言論、恐怖或暴力極端主義內容、霸凌、騷擾、性引誘、詐欺或威脅他人採取零容忍政策。<br>
-我們保留暫停或永久封禁任何違反這些社群標準或本 EULA 的人的權利。<br>
-
-<br><div style='text-align: center;'><span style='color:#FF4D4D; font-weight:bold; font-size:15px;'>(⬇️ 請將滾動條拉至最底，以解鎖同意按鈕)</span></div><br><br><br>
+為了讓社群保持包容，我們對仇恨言論、恐怖或暴力內容、霸凌、騷擾、詐欺採取零容忍政策。我們保留暫停或永久封禁任何違反這些標準的人的權利。<br>
 </div>"""
 
 EULA_EN_TEXT = """<div style='line-height: 1.6; font-size: 14px;'>
 <h2 style='color: #10B981;'>Minecraft End-User License Agreement (“EULA”)</h2>
 <h3 style='color: #3B82F6;'>SUMMARY</h3>
-This EULA is a legal agreement between you and us (Mojang AB and Microsoft Corporation). You should read the whole thing but here is a quick summary of some important points to help guide you:<br>
-• This Minecraft EULA and the Microsoft Services Agreement, together, apply to all Minecraft services.<br>
+This EULA is a legal agreement between you and us (Mojang AB and Microsoft Corporation). Here is a quick summary:<br>
+• This EULA and the Microsoft Services Agreement apply to all Minecraft services.<br>
 • Your content is yours, but please share it responsibly and safely.<br>
-• Our community standards help us build a community that is open and safe for everyone.<br>
-• You may develop tools, plug-ins and services as long as they do not seem official or approved by us.<br>
-• Do not distribute or make commercial use of anything we've made without our permission.<br>
-• We are trying to be open, honest and trusting with the hope that you hold us in the same regard.<br><br>
+• You may develop tools and plug-ins as long as they do not seem official.<br>
+• Do not distribute or make commercial use of anything we've made without permission.<br><br>
 
-<h3 style='color: #3B82F6;'>Introduction</h3>
-If you buy, download, or use any of our Services, or if you click to accept this EULA, that means you agree to this Minecraft EULA and the Microsoft Services Agreement, so please read through them carefully.<br>
-
-<h3 style='color: #3B82F6;'>What you can and can’t do with Minecraft software and content</h3>
-When you buy our games, that means you can download, install, and play them. For the server version of Minecraft: Java Edition, you can install it on a server and host online play.<br>
-However, you must not distribute anything we've made unless we specifically agree to it. By "distribute anything we've made" what we mean is:<br>
-• give copies of our game software or content to anyone else;<br>
-• make commercial use of anything we've made;<br>
-• try to make money from anything we've made; or<br>
-• let other people get access to anything we've made in a way that is unfair or unreasonable.<br>
+<h3 style='color: #3B82F6;'>What you can and can’t do</h3>
+When you buy our games, you can download, install, and play them. You can install the server software and host online play.<br>
+However, you must not distribute anything we've made. This means:<br>
+• give copies of our game to anyone else;<br>
+• make commercial use or try to make money from our work;<br>
+• let other people get access in an unfair way.<br>
 
 <h3 style='color: #3B82F6;'>USING mods</h3>
-If you've bought Minecraft: Java Edition, you may play around with it and modify it by adding modifications, tools, or plugins, which we will refer to collectively as "Mods." You may not distribute any Modded Versions of our game or software, and we’d appreciate it if you didn’t use Mods for griefing. Basically, Mods are okay to distribute; hacked versions or Modded Versions of the game client or server software are not okay to distribute.<br>
+You may modify the game by adding tools or plugins ("Mods"). You may not distribute any Modded Versions of our game.<br>
 
-<h3 style='color: #3B82F6;'>COMMUNITY STANDARDS FOR MINECRAFT</h3>
-As an Xbox Game Studio, Mojang Studios affirms the Xbox Community Standards. To keep the Minecraft community welcoming and inclusive for everyone, we have a zero-tolerance policy towards hate speech, terrorist or violent extremist content, bullying, harassing, sexual solicitation, fraud, or threatening others.<br>
-We reserve the right to suspend or permanently ban anyone who violates these Community Standards or this EULA.<br>
-
-<br><div style='text-align: center;'><span style='color:#FF4D4D; font-weight:bold; font-size:15px;'>(⬇️ Scroll all the way down to unlock Accept)</span></div><br><br><br>
+<h3 style='color: #3B82F6;'>COMMUNITY STANDARDS</h3>
+We have a zero-tolerance policy towards hate speech, violent content, bullying, harassment, and fraud. We reserve the right to ban anyone who violates these standards.<br>
 </div>"""
 
 CONFIG_FILE = "panel_config.json"
@@ -117,17 +98,18 @@ os.makedirs("servers", exist_ok=True)
 if APP_CONFIG["active_server"]:
     os.makedirs(os.path.join("servers", APP_CONFIG["active_server"]), exist_ok=True)
 
+# 動作按鈕佈局包裹器
 def create_action_widget(widgets):
     container = QWidget()
     layout = QHBoxLayout(container)
-    layout.setContentsMargins(5, 5, 5, 5) 
-    layout.setSpacing(8)
+    layout.setContentsMargins(2, 2, 2, 2) 
+    layout.setSpacing(6)
     for w in widgets: layout.addWidget(w)
     layout.addStretch()
     return container
 
 # ==========================================
-# 1. 介面視覺樣式引擎 (修正字體渲染錯誤)
+# 介面視覺樣式引擎
 # ==========================================
 def get_stylesheet(is_dark=True):
     bg_main = "#1A1B1E" if is_dark else "#F4F6F8"
@@ -160,7 +142,7 @@ def get_stylesheet(is_dark=True):
         QFrame#DashboardCard, QFrame#ModCard, QFrame#ManualCard {{ background-color: {bg_input}; border-radius: 8px; padding: 15px; border: 1px solid {border}; }}
         
         QTableWidget {{ background-color: {bg_input}; border: 1px solid {border}; color: {text_main}; border-radius: 8px; outline: none; }}
-        QTableWidget::item {{ padding: 5px; }}
+        QTableWidget::item {{ padding: 2px; }}
         QHeaderView::section {{ background-color: {bg_panel}; color: {text_sub}; padding: 10px; border: none; font-weight: bold; border-bottom: 1px solid {border};}}
         
         QWidget#ModalMask {{ background-color: rgba(0, 0, 0, 210); }}
@@ -169,7 +151,7 @@ def get_stylesheet(is_dark=True):
         QProgressBar {{ border: none; border-radius: 6px; text-align: center; background-color: {bg_input}; height: 16px; color: {text_main}; font-weight: bold; }}
         QProgressBar::chunk {{ background-color: {primary}; border-radius: 6px; }}
         
-        QPushButton {{ padding: 10px 16px; border-radius: 6px; border: none; font-weight: bold; font-size: 14px;}}
+        QPushButton {{ text-align: center; padding: 8px 14px; border-radius: 6px; border: none; font-weight: bold; font-size: 14px;}}
         QPushButton:disabled {{ background-color: {border}; color: #666666; }}
         QPushButton#PrimaryBtn {{ background-color: {primary}; color: #FFFFFF; font-size: 15px; padding: 12px;}}
         QPushButton#PrimaryBtn:hover {{ background-color: #34D399; }}
@@ -183,10 +165,7 @@ def get_stylesheet(is_dark=True):
         QPushButton#CancelGrayBtn {{ background-color: #6c757d; color: #FFFFFF; font-size: 15px; padding: 12px; }}
         QPushButton#CancelGrayBtn:hover {{ background-color: #9CA3AF; }}
         
-        QPushButton#IconBtn {{ background: transparent; color: {text_sub}; font-size: 20px; font-weight: bold; border: none; border-radius: 15px;}}
-        QPushButton#IconBtn:hover {{ color: #EF4444; background: {bg_input};}}
-        
-        QTableWidget QPushButton {{ padding: 6px 12px; margin: 2px; font-size: 13px; }}
+        QTableWidget QPushButton {{ padding: 5px 12px; font-size: 13px; }}
         
         QTabWidget::pane {{ border: 1px solid {border}; border-radius: 8px; background: {bg_panel}; }}
         QTabBar::tab {{ background: {bg_sidebar}; color: {text_sub}; padding: 10px 20px; border: 1px solid {border}; border-top-left-radius: 6px; border-top-right-radius: 6px; }}
@@ -204,6 +183,8 @@ def get_stylesheet(is_dark=True):
 # ==========================================
 # 2. 真實背景執行緒 群組
 # ==========================================
+
+# 抓取外網 IP 執行緒
 class FetchPublicIPThread(QThread):
     result = Signal(str)
     def run(self):
@@ -212,6 +193,7 @@ class FetchPublicIPThread(QThread):
             self.result.emit(ip)
         except: self.result.emit(_tr("無法獲取", "Unavailable"))
 
+# 抓取遊戲核心版本執行緒
 class FetchCoreVersionsThread(QThread):
     finished = Signal(list)
     def __init__(self, core_type, parent=None):
@@ -232,6 +214,7 @@ class FetchCoreVersionsThread(QThread):
             self.finished.emit(versions if versions else [_tr("無可用版本", "No versions found")])
         except: self.finished.emit([_tr("抓取失敗，請確認網路", "Fetch failed")])
 
+# 下載伺服器核心執行緒
 class DownloadCoreThread(QThread):
     progress = Signal(int)
     finished = Signal(str, bool) 
@@ -281,6 +264,7 @@ class DownloadCoreThread(QThread):
                 self.finished.emit(_tr("✅ 核心下載完畢！", "✅ Core downloaded!"), True)
         except Exception as e: self.finished.emit(f"❌ {str(e)}", False)
 
+# 搜尋市集模組執行緒
 class FetchModsThread(QThread):
     finished = Signal(list)
     def __init__(self, query="", core_type="", core_ver="", project_type="mod", parent=None):
@@ -315,6 +299,7 @@ class FetchModsThread(QThread):
             self.finished.emit(mods)
         except: self.finished.emit([])
 
+# 下載模組檔案執行緒
 class DownloadModThread(QThread):
     progress = Signal(int)
     finished = Signal(str, str) 
@@ -349,6 +334,7 @@ class DownloadModThread(QThread):
             self.finished.emit(_tr("✅ 部署成功", "✅ Installed"), "#10B981")
         except: self.finished.emit(_tr("❌ 下載失敗", "❌ Failed"), "red")
 
+# 伺服器本體啟動與溝通執行緒
 class ServerRunnerThread(QThread):
     log_signal = Signal(str)
     stopped_signal = Signal()
@@ -395,6 +381,7 @@ class ServerRunnerThread(QThread):
         self.is_running = False
         self.send_command("stop")
 
+# FRP 內網穿透執行緒
 class FrpRunnerThread(QThread):
     log_signal = Signal(str)
     stopped_signal = Signal()
@@ -430,6 +417,7 @@ class FrpRunnerThread(QThread):
         self.is_running = False
         if self.process: self.process.terminate()
 
+# 地圖壓縮備份執行緒
 class BackupWorldThread(QThread):
     finished = Signal(str, bool)
     def __init__(self, server_name, parent=None):
@@ -450,6 +438,7 @@ class BackupWorldThread(QThread):
             self.finished.emit(_tr("✅ 備份壓縮成功！", "✅ Backup created successfully!"), True)
         except Exception as e: self.finished.emit(_tr(f"❌ 備份失敗: {str(e)}", f"❌ Backup Failed: {str(e)}"), False)
 
+# 地圖還原解壓縮執行緒
 class RestoreBackupThread(QThread):
     finished = Signal(str, bool)
     def __init__(self, server_name, zip_name, parent=None):
@@ -491,13 +480,7 @@ class OverlayModal(QWidget):
         self.title_label = QLabel()
         self.title_label.setStyleSheet("font-size: 20px; font-weight: bold; color: #10B981;")
         self.header_layout.addWidget(self.title_label)
-        
-        self.close_btn = QPushButton("✕")
-        self.close_btn.setObjectName("IconBtn")
-        self.close_btn.setFixedSize(30, 30)
-        self.close_btn.clicked.connect(self.hide_modal)
         self.header_layout.addStretch()
-        self.header_layout.addWidget(self.close_btn)
         self.container_layout.addLayout(self.header_layout)
         
         self.content_area = QWidget()
@@ -508,11 +491,10 @@ class OverlayModal(QWidget):
         self.layout.addWidget(self.container, alignment=Qt.AlignmentFlag.AlignCenter)
         self.allow_close = True
 
-    def set_content(self, title, widget, width=500, allow_close=True):
+    def set_content(self, title, widget, width=550, allow_close=True):
         self.container.setFixedWidth(width)
         self.title_label.setText(title)
         self.allow_close = allow_close
-        self.close_btn.setVisible(allow_close)
         for i in reversed(range(self.content_layout.count())): 
             w = self.content_layout.itemAt(i).widget()
             if w: w.setParent(None)
@@ -533,7 +515,7 @@ class OverlayModal(QWidget):
         event.accept()
 
 # ==========================================
-# 4. 新手教學與 EULA (多步驟)
+# 4. 新手教學與 EULA 內容
 # ==========================================
 class TutorialContent(QWidget):
     finished = Signal()
@@ -544,15 +526,13 @@ class TutorialContent(QWidget):
         self.layout.setContentsMargins(0,0,0,0)
         self.stack = QStackedWidget()
         
-        # Step 1
+        # 教學步驟 1：語言設定
         step1 = QWidget()
         l1 = QVBoxLayout(step1)
-        
-        t1 = QLabel(_tr("<h2>👋 歡迎使用CraftNode伺服器管理面板</h2>", "<h2>👋 Welcome to CraftNode Panel</h2>"))
+        t1 = QLabel(_tr("<h2>👋 歡迎使用 CraftNode 伺服器面板</h2>", "<h2>👋 Welcome to CraftNode Panel</h2>"))
         t1.setTextFormat(Qt.TextFormat.RichText)
         l1.addWidget(t1)
-        
-        d1 = QLabel(_tr("請先決定偏好的介面語言與外觀，為您帶來最佳體驗：\n(在程式設定中可隨時更改)", "Please select your preferred language and theme for the best experience:\n(You can change this anytime in Settings)"))
+        d1 = QLabel(_tr("請先決定偏好的介面語言與外觀，為您帶來最佳體驗：\n(未來可在程式設定中隨時更改)", "Please select your preferred language and theme for the best experience:\n(You can change this anytime in Settings)"))
         d1.setStyleSheet("color: #A0A0A0; line-height: 1.5;")
         l1.addWidget(d1)
         
@@ -569,76 +549,61 @@ class TutorialContent(QWidget):
         l1.addLayout(form)
         self.stack.addWidget(step1)
         
-        # Step 2
+        # 教學步驟 2：建立工作區
         step2 = QWidget()
         l2 = QVBoxLayout(step2)
         t2 = QLabel(_tr("<h2>🗂️ 建立您的第一台伺服器</h2>", "<h2>🗂️ Create Your First Server</h2>"))
         t2.setTextFormat(Qt.TextFormat.RichText)
         l2.addWidget(t2)
-        
         desc2 = QLabel(_tr(
             "系統目前尚未綁定任何伺服器實體。<br><br>"
-            "為了保持乾淨的檔案架構，等等請先至左側的<b>「🗄️ 多伺服器清單」</b>建立新的站點，"
-            "程式會自動幫您創造專屬資料夾與環境！",
+            "為了保持乾淨的檔案架構，請先至左側的<b>「🗄️ 多伺服器清單」</b>建立新的站點，"
+            "您可以建立無數個獨立伺服器，系統會為您分配專屬資料夾並切換空間。",
             "There are currently no servers bound to the system.<br><br>"
             "To keep things organized, head to <b>Servers Management</b> first to create a new workspace. "
-            "The program will automatically generate isolated folders for you!"
+            "You can create unlimited isolated servers, and the program will organize them perfectly."
         ))
         desc2.setTextFormat(Qt.TextFormat.RichText)
         desc2.setWordWrap(True)
         l2.addWidget(desc2)
         self.stack.addWidget(step2)
         
-        # Step 3
+        # 教學步驟 3：部署核心與設定
         step3 = QWidget()
         l3 = QVBoxLayout(step3)
-        t3 = QLabel(_tr("<h2>⚙️ 下載核心與環境設定</h2>", "<h2>⚙️ Core & Environment Setup</h2>"))
+        t3 = QLabel(_tr("<h2>⚙️ 部署核心與自訂屬性</h2>", "<h2>⚙️ Core & Properties Setup</h2>"))
         t3.setTextFormat(Qt.TextFormat.RichText)
         l3.addWidget(t3)
         desc3 = QLabel(_tr(
-            "建立好伺服器後，接著來到<b>「核心與下載」</b>選擇版本下載。<br><br>"
-            "系統已為您內建了各大伺服器核心支援，下載後您可再至「屬性設定」調整 RAM 與遊戲參數。",
-            "After creating a server, go to <b>Core Deploy & Downloads</b> to select a version.<br><br>"
-            "The system natively supports major server cores. Once downloaded, you can adjust RAM and game parameters in Server Properties."
+            "建立好伺服器後，接著來到<b>「核心與下載」</b>取得執行檔。<br><br>"
+            "面板內建支援 Paper、Vanilla、Fabric，點擊即可自動完成部署與授權。<br>"
+            "隨後前往<b>「屬性與設定」</b>，透過拉桿與開關輕鬆調配伺服器 RAM、正版驗證或防禦機制。",
+            "After creating a server, go to <b>Core Deploy & Downloads</b> to download the jar file.<br><br>"
+            "The panel natively supports Paper, Vanilla, and Fabric. Once downloaded, navigate to <b>Server Properties</b> to adjust RAM allocation, online-mode, and other game rules effortlessly."
         ))
         desc3.setTextFormat(Qt.TextFormat.RichText)
         desc3.setWordWrap(True)
         l3.addWidget(desc3)
         self.stack.addWidget(step3)
         
-        # Step 4
+        # 教學步驟 4：全面掌控伺服器
         step4 = QWidget()
         l4 = QVBoxLayout(step4)
-        t4 = QLabel(_tr("<h2>📟 控制台、模組與連動</h2>", "<h2>📟 Console, Mods & Tunnels</h2>"))
+        t4 = QLabel(_tr("<h2>📟 終端管理、模組與安全排程</h2>", "<h2>📟 Control, Mods & Backups</h2>"))
         t4.setTextFormat(Qt.TextFormat.RichText)
         l4.addWidget(t4)
         desc4 = QLabel(_tr(
-            "最後，在<b>「伺服器控制台」</b>啟動伺服器！<br><br>"
-            "控制台具備即時硬體監視，如果您需要模組擴充或是內網穿透，也都可以在左側功能選單中輕鬆操作。祝您使用愉快！",
+            "最後，在<b>「伺服器控制台」</b>打火啟動！<br><br>"
+            "您可以在「擴充資源市集」自由安裝模組；在「地圖快照與備份」設定自動存檔防呆機制。<br>"
+            "若沒有實體 IP，還能透過「內網穿透」輕鬆與世界連線。準備好開始您的冒險了嗎？",
             "Finally, ignite your server in the <b>Server Console</b>!<br><br>"
-            "The console features live hardware monitoring. If you need mods or a network tunnel, they are easily accessible in the sidebar. Enjoy!"
+            "You can seamlessly install mods in the Marketplace, or configure auto-backups in the Backups tab to secure your world.<br>"
+            "Ready to begin your adventure?"
         ))
         desc4.setTextFormat(Qt.TextFormat.RichText)
         desc4.setWordWrap(True)
         l4.addWidget(desc4)
         self.stack.addWidget(step4)
-
-        # Step 5 (Open Source)
-        step5 = QWidget()
-        l5 = QVBoxLayout(step5)
-        t5 = QLabel(_tr("<h2>🌍 開源條列聲明</h2>", "<h2>🌍 Open Source Declaration</h2>"))
-        t5.setTextFormat(Qt.TextFormat.RichText)
-        l5.addWidget(t5)
-        desc5 = QLabel(_tr(
-            "本管理面板為免費開源軟體，您可以自由修改程式碼並符合自我審美。<br><br>"
-            "唯<b>禁止以任何形式作為商業專案販售或宣稱為私有獲利產品</b>。感謝。",
-            "This management panel is free and open-source software. You are free to modify the source code to fit your needs.<br><br>"
-            "However, <b>commercial selling or claiming this as a proprietary profitable product is strictly prohibited</b>. Thank you."
-        ))
-        desc5.setTextFormat(Qt.TextFormat.RichText)
-        desc5.setWordWrap(True)
-        l5.addWidget(desc5)
-        self.stack.addWidget(step5)
 
         self.layout.addWidget(self.stack)
         
@@ -734,12 +699,12 @@ class EulaContent(QWidget):
             self.hint_label.setStyleSheet("color: #10B981; font-weight: bold; margin-top:10px;")
 
 # ==========================================
-# 5. 主視窗
+# 5. 核心面板與邏輯
 # ==========================================
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(_tr("CraftNode 伺服器管理面板", "CraftNode Server Panel"))
+        self.setWindowTitle(_tr("CraftNode 伺服器管理面板 - 開源最終版", "CraftNode Server Panel - Open Source Edition"))
         self.resize(1380, 900)
         self.setStyleSheet(get_stylesheet(APP_CONFIG["is_dark"]))
         
@@ -753,6 +718,10 @@ class MainWindow(QMainWindow):
         self.max_pl_count = 20
         self.last_net = psutil.net_io_counters()
 
+        # 自動備份計時器初始化
+        self.auto_backup_timer = QTimer(self)
+        self.auto_backup_timer.timeout.connect(lambda: self.make_backup(auto=True))
+
         self.tray_icon = QSystemTrayIcon(self)
         icon = self.style().standardIcon(QStyle.StandardPixmap.SP_ComputerIcon)
         self.tray_icon.setIcon(icon)
@@ -765,8 +734,6 @@ class MainWindow(QMainWindow):
         tray_menu.addAction(act_quit)
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.activated.connect(self.tray_activation)
-        
-        # 🟢 修正：顯示系統匣圖示，解決在背景執行時圖示消失的靈異現象
         self.tray_icon.show()
 
         self.central_widget = QWidget()
@@ -803,6 +770,8 @@ class MainWindow(QMainWindow):
             QTimer.singleShot(400, self.boot_tutorial)
         else:
             self.update_server_sync_count() 
+            
+        self.log_sys_alert(_tr("面板初始化完成，歡迎使用 CraftNode。", "Panel initialized successfully. Welcome to CraftNode."), "success")
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -841,11 +810,11 @@ class MainWindow(QMainWindow):
         btn.clicked.connect(self.overlay.hide_modal)
         
         l.addWidget(btn)
-        self.overlay.set_content(title, w, width=450, allow_close=True)
+        self.overlay.set_content(title, w, width=550, allow_close=True)
         self.overlay.show_modal()
 
     def boot_tutorial(self):
-        self.overlay.set_content("✨ Welcome", TutorialContent(self), width=600, allow_close=False)
+        self.overlay.set_content("✨ Welcome", TutorialContent(self), width=650, allow_close=False)
         self.overlay.show_modal()
 
     def create_sidebar(self):
@@ -891,7 +860,7 @@ class MainWindow(QMainWindow):
         create_btn("📦 " + _tr("擴充資源市集", "Marketplace"), 6)
         
         add_category(_tr("進階運作", "ADVANCED"), True)
-        create_btn("📅 " + _tr("排程與地圖備份", "Tasks & Backups"), 7)
+        create_btn("📅 " + _tr("地圖快照與備份", "World Backups"), 7)
         create_btn("🌐 " + _tr("內網穿透與通道", "Network Tunnels"), 8)
         
         layout.addStretch() 
@@ -914,6 +883,10 @@ class MainWindow(QMainWindow):
                 btn.setStyleSheet("background-color: #25262B; color: #10B981;")
             else:
                 btn.setStyleSheet("")
+                
+        # 進入備份頁面時動態刷新設定讀取
+        if index == 7:
+            self.refresh_backups()
 
     def create_topbar(self):
         topbar = QWidget()
@@ -1124,10 +1097,14 @@ class MainWindow(QMainWindow):
             btn_switch = QPushButton(_tr("切換", "Connect") if not is_act else _tr("已連入", "Active"))
             btn_switch.setObjectName("SecondaryBtn" if not is_act else "SuccessBtn")
             btn_switch.setEnabled(not is_act)
+            btn_switch.setMinimumWidth(80) 
             btn_switch.clicked.connect(lambda ch, s=name: self.switch_active_server(s))
+            
             btn_del = QPushButton("🗑️ " + _tr("刪除", "Delete"))
             btn_del.setObjectName("DangerBtn")
+            btn_del.setMinimumWidth(80) 
             btn_del.clicked.connect(lambda ch, s=name: self.delete_server(s))
+            
             self.srv_list.setCellWidget(r, 2, create_action_widget([btn_switch, btn_del]))
 
     def show_add_server_modal(self):
@@ -1140,7 +1117,7 @@ class MainWindow(QMainWindow):
             name = inp.text().strip()
             if not name or not name.isalnum(): return self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("名稱不可為空且必須是純英數！", "Name cannot be empty and must be alphanumeric!"))
             if any(s["name"] == name for s in APP_CONFIG["servers"]): return self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("該名稱的伺服器已存在。", "Server name already exists."))
-            APP_CONFIG["servers"].append({"name": name, "core": "未下載", "version": "", "ram": 4, "aikar": True, "custom_jvm": ""})
+            APP_CONFIG["servers"].append({"name": name, "core": "未下載", "version": "", "ram": 4, "aikar": True, "custom_jvm": "", "eula_agreed_core": "", "auto_backup": 0, "backup_on_stop": False})
             save_config(APP_CONFIG)
             os.makedirs(os.path.join("servers", name), exist_ok=True)
             self.refresh_server_list()
@@ -1169,7 +1146,7 @@ class MainWindow(QMainWindow):
                 try:
                     with zipfile.ZipFile(filepath, 'r') as zip_ref:
                         zip_ref.extractall(target_dir)
-                    APP_CONFIG["servers"].append({"name": name, "core": "Imported", "version": "Custom"})
+                    APP_CONFIG["servers"].append({"name": name, "core": "Imported", "version": "Custom", "eula_agreed_core": "", "auto_backup": 0, "backup_on_stop": False})
                     save_config(APP_CONFIG)
                     self.refresh_server_list()
                     self.show_custom_alert(_tr("成功", "Success"), _tr(f"成功匯入伺服器 {name}！", f"Successfully imported {name}!"))
@@ -1182,6 +1159,7 @@ class MainWindow(QMainWindow):
         APP_CONFIG["active_server"] = name
         save_config(APP_CONFIG)
         self.refresh_server_list()
+        self.log_sys_alert(_tr(f"已將工作區切換至伺服器：{name}", f"Workspace switched to server: {name}"), "info")
 
     def delete_server(self, name):
         if self.server_thread and self.server_thread.isRunning() and APP_CONFIG["active_server"] == name:
@@ -1200,6 +1178,7 @@ class MainWindow(QMainWindow):
             try: shutil.rmtree(os.path.join("servers", name), ignore_errors=True)
             except: pass
             self.refresh_server_list()
+            self.log_sys_alert(_tr(f"已永久刪除伺服器 {name}", f"Server {name} permanently deleted."), "error")
             self.overlay.hide_modal(force=True)
             
         btn_cancel = QPushButton(_tr("取消", "Cancel")); btn_cancel.setObjectName("SecondaryBtn")
@@ -1211,7 +1190,7 @@ class MainWindow(QMainWindow):
         btn_confirm.clicked.connect(confirm)
         lo_h = QHBoxLayout(); lo_h.addWidget(btn_cancel); lo_h.addWidget(btn_confirm)
         l.addLayout(lo_h)
-        self.overlay.set_content(_tr("確認終極操作", "Verify Action"), w, width=500, allow_close=False)
+        self.overlay.set_content(_tr("確認終極操作", "Verify Action"), w, width=550, allow_close=False)
         self.overlay.show_modal()
 
     # ==========================
@@ -1228,7 +1207,7 @@ class MainWindow(QMainWindow):
         self.table_players = QTableWidget(0, 2)
         self.table_players.setHorizontalHeaderLabels([_tr("玩家名稱", "Player Name"), _tr("快速操作", "Actions")])
         self.table_players.verticalHeader().setVisible(False)
-        self.table_players.verticalHeader().setDefaultSectionSize(65)
+        self.table_players.verticalHeader().setDefaultSectionSize(95)
         self.table_players.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         self.table_players.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
         lo.addWidget(self.table_players)
@@ -1246,21 +1225,28 @@ class MainWindow(QMainWindow):
             self.table_players.insertRow(idx)
             self.table_players.setItem(idx, 0, QTableWidgetItem(f"🟢 {p_name}"))
             
-            b_op = QPushButton(_tr("給予 OP", "OP")); b_op.setObjectName("SuccessBtn")
-            b_deop = QPushButton(_tr("撤除 OP", "De-OP")); b_deop.setObjectName("SecondaryBtn")
-            b_surv = QPushButton(_tr("生存", "Survival")); b_surv.setObjectName("SecondaryBtn")
-            b_crea = QPushButton(_tr("創造", "Creative")); b_crea.setObjectName("PrimaryBtn")
-            b_kick = QPushButton(_tr("踢出", "Kick")); b_kick.setObjectName("DangerBtn")
-            b_ban = QPushButton(_tr("封鎖", "Ban")); b_ban.setObjectName("DangerBtn")
+            b_op = QPushButton(_tr("👑 OP", "👑 OP")); b_op.setObjectName("SuccessBtn")
+            b_deop = QPushButton(_tr("🔻 撤 OP", "🔻 DeOP")); b_deop.setObjectName("SecondaryBtn")
+            b_surv = QPushButton(_tr("⛏️ 生存", "⛏️ Surv")); b_surv.setObjectName("SecondaryBtn")
+            b_crea = QPushButton(_tr("🎨 創造", "🎨 Crea")); b_crea.setObjectName("PrimaryBtn")
+            b_kick = QPushButton(_tr("🥾 踢出", "🥾 Kick")); b_kick.setObjectName("DangerBtn")
+            b_ban = QPushButton(_tr("🚫 封鎖", "🚫 Ban")); b_ban.setObjectName("DangerBtn")
             
             b_op.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"op {p}"))
             b_deop.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"deop {p}"))
             b_surv.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"gamemode survival {p}"))
             b_crea.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"gamemode creative {p}"))
-            b_kick.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"kick {p} {_tr('管理員已將您踢出', 'Kicked by Administrator')}"))
-            b_ban.clicked.connect(lambda ch, p=p_name: self.send_instant_cmd(f"ban {p} {_tr('違反規定', 'Banned by Administrator')}"))
+            b_kick.clicked.connect(lambda ch, p=p_name: [self.send_instant_cmd(f"kick {p} {_tr('管理員已將您踢出', 'Kicked by Administrator')}"), self.log_sys_alert(_tr(f"已踢出玩家 {p}", f"Kicked player {p}"), "warn")])
+            b_ban.clicked.connect(lambda ch, p=p_name: [self.send_instant_cmd(f"ban {p} {_tr('違反規定', 'Banned by Administrator')}"), self.log_sys_alert(_tr(f"已封鎖玩家 {p}", f"Banned player {p}"), "error")])
             
-            self.table_players.setCellWidget(idx, 1, create_action_widget([b_op, b_deop, b_surv, b_crea, b_kick, b_ban]))
+            c_widget = QWidget()
+            grid_lo = QGridLayout(c_widget)
+            grid_lo.setContentsMargins(5, 5, 5, 5)
+            grid_lo.setSpacing(5)
+            grid_lo.addWidget(b_op, 0, 0); grid_lo.addWidget(b_deop, 0, 1); grid_lo.addWidget(b_surv, 0, 2)
+            grid_lo.addWidget(b_crea, 1, 0); grid_lo.addWidget(b_kick, 1, 1); grid_lo.addWidget(b_ban, 1, 2)
+            
+            self.table_players.setCellWidget(idx, 1, c_widget)
 
     def send_instant_cmd(self, cmd):
         if self.server_thread and self.server_thread.isRunning():
@@ -1323,9 +1309,16 @@ class MainWindow(QMainWindow):
         if "Forge" in self.combo_core.currentText():
             self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("Forge 不支援直鏈。請自行下載 Installer 放入！", "Forge requires manual import."))
             return
-        eula_ui = EulaContent(on_reject=lambda: self.overlay.hide_modal(force=True), on_accept=self.start_download_process)
-        self.overlay.set_content(_tr("授權合約聲明", "EULA Contract"), eula_ui, width=800, allow_close=False)
-        self.overlay.show_modal()
+            
+        c_type = self.combo_core.currentText().split(' ')[0]
+        curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
+        
+        if curr_srv and curr_srv.get("eula_agreed_core") == c_type:
+            self.start_download_process()
+        else:
+            eula_ui = EulaContent(on_reject=lambda: self.overlay.hide_modal(force=True), on_accept=self.start_download_process)
+            self.overlay.set_content(_tr("授權合約聲明", "EULA Contract"), eula_ui, width=800, allow_close=False)
+            self.overlay.show_modal()
 
     def start_download_process(self):
         self.overlay.hide_modal(force=True)
@@ -1337,12 +1330,16 @@ class MainWindow(QMainWindow):
         
         for s in APP_CONFIG["servers"]:
             if s["name"] == APP_CONFIG["active_server"]:
-                s["core"] = c_type; s["version"] = c_ver
+                s["core"] = c_type
+                s["version"] = c_ver
+                s["eula_agreed_core"] = c_type
         save_config(APP_CONFIG)
         self.refresh_server_list()
         
         self.dl_lbl.setText(_tr(f"下載中： {c_type} {c_ver} ...", f"Downloading: {c_type} {c_ver} ..."))
         self.dl_bar.setValue(0)
+        
+        self.log_sys_alert(_tr(f"開始從網路下載伺服器核心：{c_type} {c_ver}", f"Downloading core: {c_type} {c_ver}"), "info")
         
         dl_thread = DownloadCoreThread(c_type, c_ver, APP_CONFIG["active_server"], parent=self)
         dl_thread.progress.connect(lambda val: self.dl_bar.setRange(0, 0) if val == -1 else (self.dl_bar.setRange(0, 100), self.dl_bar.setValue(val)))
@@ -1351,7 +1348,8 @@ class MainWindow(QMainWindow):
             self.dl_lbl.setText(msg), 
             self.btn_core_action.setText(_tr("🔄 重新下載核心", "🔄 Re-Download Core")),
             self.btn_core_action.setObjectName("DangerBtn"),
-            self.btn_core_action.setEnabled(True)
+            self.btn_core_action.setEnabled(True),
+            self.log_sys_alert(msg, "success" if ok else "error")
         ])                   
         dl_thread.start()                
         self.active_threads.append(dl_thread)    
@@ -1370,7 +1368,7 @@ class MainWindow(QMainWindow):
         container = QWidget()    
         grid = QGridLayout(container)     
         grid.setColumnStretch(0, 1)
-        grid.setColumnStretch(1, 1) # 完美右右 50%
+        grid.setColumnStretch(1, 1)
         grid.setSpacing(20)   
 
         grp_basic = QGroupBox(_tr("基礎與網路資訊", "Network Info"))  		
@@ -1411,7 +1409,6 @@ class MainWindow(QMainWindow):
         self.seed_input.setPlaceholderText(_tr("留空隨機...", "Random if blank..."))
         self.seed_input.setMaximumWidth(400)
         
-        # 📌 實裝 RAM
         self.ram_val_lbl = QLabel("1 GB")           
         self.ram_slider = QSlider(Qt.Orientation.Horizontal)         
         sys_ram_gb = int(psutil.virtual_memory().total / 1e9)           
@@ -1498,6 +1495,7 @@ class MainWindow(QMainWindow):
                 f.write("# Generated by Configurator\n")
                 for k, v in props.items(): f.write(f"{k}={v}\n")
             self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("設定已成功寫入！硬體配置與 GC 參數也已連動紀錄。", "Settings successfully saved! Hardware config updated."))
+            self.log_sys_alert(_tr("屬性與世界設定已更新並寫入檔案。", "Server properties updated and saved."), "success")
         except Exception as e:
             self.show_custom_alert(_tr("錯誤", "Error"), str(e))
 
@@ -1533,10 +1531,11 @@ class MainWindow(QMainWindow):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff) 
-        self.market_grid_widget = QWidget()
-        self.market_grid = QGridLayout(self.market_grid_widget)
-        self.market_grid.setColumnStretch(0, 1); self.market_grid.setColumnStretch(1, 1); self.market_grid.setColumnStretch(2, 1)
-        scroll.setWidget(self.market_grid_widget)
+        
+        self.market_list_widget = QWidget()
+        self.market_list_layout = QVBoxLayout(self.market_list_widget)
+        self.market_list_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        scroll.setWidget(self.market_list_widget)
         l_search.addWidget(scroll)
         
         tab_manage = QWidget()
@@ -1566,15 +1565,16 @@ class MainWindow(QMainWindow):
             target = os.path.join("servers", APP_CONFIG["active_server"], "mods")
             os.makedirs(target, exist_ok=True)
             shutil.copy(filepath, target)
+            self.log_sys_alert(_tr(f"已手動匯入模組：{os.path.basename(filepath)}", f"Manually imported mod: {os.path.basename(filepath)}"), "success")
             self.refresh_installed_mods()
 
     def execute_mod_search(self):
         query = self.search_box.text()
         project_type = self.filter_cb.currentText()
-        for i in reversed(range(self.market_grid.count())):
-            w = self.market_grid.itemAt(i).widget()
+        for i in reversed(range(self.market_list_layout.count())):
+            w = self.market_list_layout.itemAt(i).widget()
             if w: w.deleteLater()
-        self.market_grid.addWidget(QLabel(_tr("⏳ 系統正在搜尋相關資源...", "⏳ Searching...")), 0, 0)
+        self.market_list_layout.addWidget(QLabel(_tr("⏳ 系統正在搜尋相關資源...", "⏳ Searching...")))
         
         curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
         c_type = curr_srv["core"].lower() if curr_srv else ""
@@ -1586,38 +1586,45 @@ class MainWindow(QMainWindow):
         self.active_threads.append(thread)
 
     def populate_mod_grid(self, mods):
-        for i in reversed(range(self.market_grid.count())):
-            w = self.market_grid.itemAt(i).widget()
+        for i in reversed(range(self.market_list_layout.count())):
+            w = self.market_list_layout.itemAt(i).widget()
             if w: w.deleteLater()
             
         if not mods: 
-            self.market_grid.addWidget(QLabel(_tr("目前條件找不到相關資源。", "No results found.")), 0,0)
+            self.market_list_layout.addWidget(QLabel(_tr("目前條件找不到相關資源。", "No results found.")))
             return
 
-        for index, (title, desc, author, slug) in enumerate(mods):
+        for title, desc, author, slug in mods:
             card = QFrame()
             card.setObjectName("ModCard")
-            card.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Minimum) 
-            cl = QVBoxLayout(card)
+            card_lo = QHBoxLayout(card)
+            
+            info_lo = QVBoxLayout()
             t = QLabel(title)
             t.setStyleSheet("font-weight:bold; font-size:16px;")
-            cl.addWidget(t)
+            info_lo.addWidget(t)
             d = QLabel(desc)
             d.setWordWrap(True) 
             d.setStyleSheet("color:#A0A0A0; margin-top:5px; line-height:1.4;")
-            cl.addWidget(d)
-            cl.addStretch() 
+            info_lo.addWidget(d)
+            
+            card_lo.addLayout(info_lo)
+            card_lo.addStretch()
+            
             btn_dl = QPushButton(_tr("⬇️ 安裝此包", "⬇️ Install"))
             btn_dl.setObjectName("SecondaryBtn")
+            btn_dl.setFixedWidth(130)
             btn_dl.clicked.connect(lambda ch, s=slug, b=btn_dl: self.start_mod_download(s, b))
-            cl.addWidget(btn_dl)
-            self.market_grid.addWidget(card, index // 3, index % 3)
+            
+            card_lo.addWidget(btn_dl, 0, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+            self.market_list_layout.addWidget(card)
 
     def start_mod_download(self, slug, btn):
         btn.setEnabled(False)
         thread = DownloadModThread(slug, APP_CONFIG["active_server"], parent=self)
         thread.finished.connect(lambda msg, color, b=btn: [
             b.setText(msg), b.setStyleSheet(f"color: {color};"), 
+            self.log_sys_alert(_tr(f"已從網路市集安裝資源：{slug}", f"Installed resource from market: {slug}"), "success"),
             self.refresh_installed_mods()
         ])
         thread.start()
@@ -1637,8 +1644,11 @@ class MainWindow(QMainWindow):
             
             btn_t = QPushButton(_tr("✅ 啟用中", "✅ Enabled") if is_enabled else _tr("❌ 停用", "❌ Disabled"))
             btn_t.setObjectName("SuccessBtn" if is_enabled else "SecondaryBtn")
+            btn_t.setMinimumWidth(100)
+            
             btn_d = QPushButton("🗑️")
             btn_d.setObjectName("DangerBtn")
+            btn_d.setMinimumWidth(50)
             btn_d.clicked.connect(lambda ch, m=mod: self.delete_mod(m))
             
             c_widget = create_action_widget([btn_t, btn_d])
@@ -1647,6 +1657,7 @@ class MainWindow(QMainWindow):
     def delete_mod(self, filename):
         target = os.path.join("servers", APP_CONFIG["active_server"], "mods", filename)
         if os.path.exists(target): os.remove(target)
+        self.log_sys_alert(_tr(f"已刪除資源實體：{filename}", f"Deleted resource: {filename}"), "error")
         self.refresh_installed_mods()
 
     # ==========================
@@ -1699,16 +1710,34 @@ class MainWindow(QMainWindow):
         console_v_lo.addLayout(cmd_h_lo)   
         
         quick_grp = QGroupBox(_tr("⚡ 快捷指令", "⚡ Quick Commands"))
-        qk_lo = QHBoxLayout(quick_grp)
-        for c_lbl, cmd in [(_tr("☀️ 設定為白天", "☀️ Set Day"), "time set day"), 
-                           (_tr("🌂 清除雨雪天氣", "🌂 Clear Weather"), "weather clear"), 
-                           (_tr("💾 強制存檔", "💾 Force Save"), "save-all"), 
-                           (_tr("⚔️ 清理非玩家實體", "⚔️ Kill Entities"), "kill @e[type=!player]")]:
-            b = QPushButton(c_lbl)
-            b.setObjectName(f"SmallBtn")
-            b.clicked.connect(lambda ch, c=cmd: self.send_instant_cmd(c))
-            qk_lo.addWidget(b)
-        qk_lo.addStretch()
+        qk_vlo = QVBoxLayout(quick_grp)
+        qk_vlo.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        def create_cmd_row(cmds):
+            row = QHBoxLayout()
+            row.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            for lbl, cmd in cmds:
+                b = QPushButton(lbl)
+                b.setObjectName("SecondaryBtn")
+                b.clicked.connect(lambda ch, c=cmd: self.send_instant_cmd(c))
+                row.addWidget(b)
+            return row
+            
+        row1 = create_cmd_row([
+            (_tr("☀️ 白天", "☀️ Day"), "time set day"), 
+            (_tr("🌙 黑夜", "🌙 Night"), "time set night"), 
+            (_tr("🌂 晴天", "🌂 Clear Weather"), "weather clear"), 
+            (_tr("🌧️ 雨天", "🌧️ Rain"), "weather rain")
+        ])
+        row2 = create_cmd_row([
+            (_tr("💾 強制存檔", "💾 Force Save"), "save-all"), 
+            (_tr("♻️ 重新載入", "♻️ Reload"), "reload"),
+            (_tr("⚔️ 清除掉落物", "⚔️ Clear Drops"), "kill @e[type=item]"),
+            (_tr("💀 清除怪物", "💀 Kill Mobs"), "kill @e[type=hostile]")
+        ])
+        
+        qk_vlo.addLayout(row1)
+        qk_vlo.addLayout(row2)
         console_v_lo.addWidget(quick_grp)
         
         console_v_lo.addWidget(self.btn_power)
@@ -1722,22 +1751,20 @@ class MainWindow(QMainWindow):
         self.console_output.moveCursor(QTextCursor.MoveOperation.End)   
         self.console_output.insertHtml(html_log)        
         
-        # --- 狀態更新解析機制 ---
-        # 1. 偵測開機完成
         if re.search(r'Done \(.*?\)! For help, type "help"', msg) or re.search(r'Timings Reset', msg):
             self.set_server_state("online")
+            self.log_sys_alert(_tr("伺服器已成功啟動並上線！", "Server successfully started and is online!"), "success")
             
-        # 2. 偵測 Port 衝突
         if re.search(r"BindException|Address already in use", msg):
             self.log_to_console(_tr("💡 【系統提示】啟動失敗，Port 已被佔用！請檢查是否有其他軟體正在使用。", "💡 [System] Start failed! Port already in use."), "yellow")
             
-        # 3. 偵測玩家進出並更新列表
         join_match = re.search(r": (\w+) joined the game", msg)
         if join_match:
             p = join_match.group(1)
             if p not in self.online_players:
                 self.online_players.append(p)
                 self.refresh_players_table()
+                self.log_sys_alert(_tr(f"玩家 {p} 加入了伺服器。", f"Player {p} joined the server."), "success")
                 
         leave_match = re.search(r": (\w+) left the game", msg)
         if leave_match:
@@ -1745,16 +1772,17 @@ class MainWindow(QMainWindow):
             if p in self.online_players:
                 self.online_players.remove(p)
                 self.refresh_players_table()
+                self.log_sys_alert(_tr(f"玩家 {p} 離開了伺服器。", f"Player {p} left the server."), "warn")
 
     def toggle_server_power(self):
+        curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
+        if not curr_srv: return
+        
         if self.server_thread and self.server_thread.isRunning():
             self.log_to_console("Sending STOP command...", "yellow")
             self.server_thread.stop_server()
             self.set_server_state("stopping")
         else:
-            curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
-            if not curr_srv: return
-            
             jar_name = f"server-{curr_srv.get('version', '')}.jar"
             jar_path = os.path.join("servers", APP_CONFIG["active_server"], jar_name)
             
@@ -1779,8 +1807,14 @@ class MainWindow(QMainWindow):
             self.btn_power.setText("🛑 " + _tr("中斷連線", "Stop Server"))
             self.btn_power.setObjectName("DangerBtn")
             
-            # 設定正在啟動狀態
             self.set_server_state("starting")
+            self.log_sys_alert(_tr(f"準備啟動伺服器實體：{APP_CONFIG['active_server']}", f"Starting server instance: {APP_CONFIG['active_server']}"), "warn")
+            
+            # 啟動自動備份排程計時器
+            hours = curr_srv.get("auto_backup", 0)
+            if hours > 0:
+                self.auto_backup_timer.start(hours * 3600 * 1000)
+                self.log_sys_alert(_tr(f"已觸發自動備份排程 (間隔：{hours} 小時)。", f"Auto-backup routine triggered (Interval: {hours} hr)."), "info")
             
             self.server_thread = ServerRunnerThread(
                 server_dir=os.path.join("servers", APP_CONFIG["active_server"]),
@@ -1795,15 +1829,22 @@ class MainWindow(QMainWindow):
             self.server_thread.start()
 
     def on_server_stopped(self):
+        self.auto_backup_timer.stop()
+        
         self.btn_power.setText("🚀 " + _tr("啟動伺服器", "Start Instance"))
         self.btn_power.setObjectName("PrimaryBtn")
         self.btn_power.setStyleSheet("")
         self.log_to_console("Instance Offline.", "red")
         
-        # 清空在線玩家並設定離線狀態
         self.online_players.clear()
         self.refresh_players_table()
         self.set_server_state("offline")
+        self.log_sys_alert(_tr("伺服器已安全關閉。", "Server has been safely stopped."), "info")
+        
+        # 觸發關機自動備份機制
+        curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
+        if curr_srv and curr_srv.get("backup_on_stop", False):
+            self.make_backup(auto=True)
 
     def send_console_command(self):
         cmd = self.cmd_input.text().strip()
@@ -1819,7 +1860,33 @@ class MainWindow(QMainWindow):
         page = self.page_backup
         v_layout = QVBoxLayout(page)         
         v_layout.setContentsMargins(40, 30, 40, 30)
-        v_layout.addWidget(QLabel(f" <h1 class='title'>📅 {_tr('排程與備份', 'Backup & Restore')}</h1> ") )    
+        v_layout.addWidget(QLabel(f" <h1 class='title'>📅 {_tr('地圖快照與備份', 'World Backups')}</h1> ") )    
+
+        cfg_grp = QGroupBox(_tr("自動備份設定", "Auto-Backup Configuration"))
+        cfg_lo = QHBoxLayout(cfg_grp)
+
+        self.ab_interval = QComboBox()
+        self.ab_interval.addItems([
+            _tr("停用 (預設)", "Disabled (Default)"), 
+            _tr("每 1 小時", "Every 1 hr"), 
+            _tr("每 6 小時", "Every 6 hrs"), 
+            _tr("每 12 小時", "Every 12 hrs"), 
+            _tr("每 24 小時", "Every 24 hrs")
+        ])
+        
+        self.ab_shutdown = QCheckBox(_tr("伺服器安全關閉時，自動存檔並備份", "Auto-backup on server shutdown"))
+
+        btn_save_ab = QPushButton(_tr("儲存排程", "Save Routine"))
+        btn_save_ab.setObjectName("PrimaryBtn")
+        btn_save_ab.clicked.connect(self.save_backup_settings)
+
+        cfg_lo.addWidget(QLabel(_tr("自動備份間隔:", "Auto-backup Interval:")))
+        cfg_lo.addWidget(self.ab_interval)
+        cfg_lo.addSpacing(20)
+        cfg_lo.addWidget(self.ab_shutdown)
+        cfg_lo.addStretch()
+        cfg_lo.addWidget(btn_save_ab)
+        v_layout.addWidget(cfg_grp)
 
         grp_bkp = QGroupBox(_tr("建立快照與還原管理", "Snapshot & Restore Management"))   
         bkp_v_layout = QVBoxLayout(grp_bkp)      
@@ -1835,14 +1902,37 @@ class MainWindow(QMainWindow):
         btn_create = QPushButton(_tr("📦 對當下資料執行壓縮備份", "📦 Create Backup Snapshot"))
         btn_create.setObjectName("PrimaryBtn")
         btn_create.setMinimumHeight(45)
-        btn_create.clicked.connect(self.make_backup)
+        btn_create.clicked.connect(lambda: self.make_backup(auto=False))
         
         bkp_v_layout.addWidget(btn_create)
         bkp_v_layout.addWidget(self.table_bkp) 
         v_layout.addWidget(grp_bkp)           
         self.refresh_backups()
 
+    def save_backup_settings(self):
+        if not APP_CONFIG["active_server"]: return
+        hours_map = {0: 0, 1: 1, 2: 6, 3: 12, 4: 24}
+        idx = self.ab_interval.currentIndex()
+        h = hours_map.get(idx, 0)
+        
+        for s in APP_CONFIG["servers"]:
+            if s["name"] == APP_CONFIG["active_server"]:
+                s["auto_backup"] = h
+                s["backup_on_stop"] = self.ab_shutdown.isChecked()
+        save_config(APP_CONFIG)
+        self.show_custom_alert(_tr("系統提示", "System Info"), _tr("自動備份排程與設定已儲存！", "Auto-backup settings saved successfully!"))
+        
+        if self.server_thread and self.server_thread.isRunning():
+            self.auto_backup_timer.stop()
+            if h > 0: self.auto_backup_timer.start(h * 3600 * 1000)
+
     def refresh_backups(self):
+        curr_srv = next((s for s in APP_CONFIG["servers"] if s["name"] == APP_CONFIG["active_server"]), None)
+        if curr_srv:
+            idx_map = {0:0, 1:1, 6:2, 12:3, 24:4}
+            self.ab_interval.setCurrentIndex(idx_map.get(curr_srv.get("auto_backup", 0), 0))
+            self.ab_shutdown.setChecked(curr_srv.get("backup_on_stop", False))
+            
         if not hasattr(self, 'table_bkp'): return
         self.table_bkp.setRowCount(0)
         bk_dir = os.path.join("servers", APP_CONFIG["active_server"], "backups")
@@ -1854,7 +1944,6 @@ class MainWindow(QMainWindow):
             self.table_bkp.setItem(idx, 0, QTableWidgetItem(file))
             self.table_bkp.setItem(idx, 1, QTableWidgetItem(f"{size_mb:.1f} MB"))
             
-            # 🟢 修正：強制賦予最小寬度，防止 Emoji 被擠壓裁切
             btn_res = QPushButton(_tr("↩️ 還原存檔", "↩️ Restore"))
             btn_res.setObjectName("SecondaryBtn")
             btn_res.setMinimumWidth(120) 
@@ -1867,13 +1956,29 @@ class MainWindow(QMainWindow):
             
             self.table_bkp.setCellWidget(idx, 2, create_action_widget([btn_res, btn_del]))
 
-    def make_backup(self):
+    def make_backup(self, auto=False):
         if not APP_CONFIG["active_server"]: return
+        
+        # 防止手動備份時伺服器運行造成破檔。若為自動備份，則進行安全指令寫入再壓縮。
         if self.server_thread and self.server_thread.isRunning():
-            return self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("伺服器運行中不可備份，請先關閉！", "Cannot backup while server is running. Stop it first."))
-        self.log_sys_alert("Compressing...", "warn")
+            if not auto:
+                return self.show_custom_alert(_tr("系統提示", "System Notification"), _tr("為避免破檔，手動備份時請先關閉伺服器！", "Cannot backup manually while server is running to prevent corruption."))
+            else:
+                self.server_thread.send_command("save-off")
+                self.server_thread.send_command("save-all")
+        
+        self.log_sys_alert(_tr("系統正在背景執行地圖快照壓縮...", "Creating world backup snapshot in background..."), "warn")
         thread = BackupWorldThread(APP_CONFIG["active_server"], parent=self)
-        thread.finished.connect(lambda msg, ok: [self.show_custom_alert(_tr("系統回報", "System Info"), msg), self.refresh_backups()])
+        
+        def on_backup_done(msg, ok):
+            if self.server_thread and self.server_thread.isRunning():
+                self.server_thread.send_command("save-on")
+            if not auto:
+                self.show_custom_alert(_tr("系統回報", "System Info"), msg)
+            self.log_sys_alert(msg, "success" if ok else "error")
+            self.refresh_backups()
+            
+        thread.finished.connect(on_backup_done)
         thread.start()
         self.active_threads.append(thread)
 
@@ -1886,8 +1991,9 @@ class MainWindow(QMainWindow):
         l.addWidget(QLabel(_tr("您的操作即將完全覆蓋目前的 World。\n歷史是否要重新覆寫引導？", "Overwrite current world directory with this backup?")))
         def confirm():
             self.overlay.hide_modal(force=True)
+            self.log_sys_alert(_tr(f"開始還原備份檔案：{filename}", f"Restoring backup file: {filename}"), "warn")
             thread = RestoreBackupThread(APP_CONFIG["active_server"], filename, parent=self)
-            thread.finished.connect(lambda msg, ok: self.show_custom_alert(_tr("操作覆核結果", "Action Result"), msg))
+            thread.finished.connect(lambda msg, ok: [self.show_custom_alert(_tr("操作覆核結果", "Action Result"), msg), self.log_sys_alert(msg, "success" if ok else "error")])
             thread.start()
             self.active_threads.append(thread)
             
@@ -1911,6 +2017,7 @@ class MainWindow(QMainWindow):
     def delete_backup(self, filename):
         target = os.path.join("servers", APP_CONFIG["active_server"], "backups", filename)
         if os.path.exists(target): os.remove(target)
+        self.log_sys_alert(_tr(f"已刪除備份快照：{filename}", f"Deleted backup snapshot: {filename}"), "error")
         self.refresh_backups()
 
 
@@ -2018,21 +2125,23 @@ class MainWindow(QMainWindow):
         vl = QVBoxLayout(w)
         
         txt_zh = """<div style='line-height:2.0; font-size: 15px;'>
-        <h3 style='color: #10B981; margin-bottom: 5px;'>1. 🗂️ 建立伺服器與多站點管理</h3>
-        <p style='margin-top: 0;'>在左側菜單選擇<b>「多伺服器清單」</b>，點擊「建立新伺服器」並輸入全英文或數字的名稱（例如：MySurvival）。系統會自動在 <code>servers/</code> 目錄下為您建立獨立的資料夾。您可以建立無數個伺服器，並隨時透過「切換」按鈕來決定目前要操作哪一個站點。</p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>1. 🗂️ 多站點與伺服器建立</h3>
+        <p style='margin-top: 0;'>在左側菜單選擇<b>「多伺服器清單」</b>，點擊「建立新伺服器」並輸入全英數的名稱。系統會自動在資料夾下為您建立獨立空間，互不干擾。您可以隨時點選「切換」來決定目前要管理與開機的站點。</p>
 
-        <h3 style='color: #10B981; margin-bottom: 5px;'>2. ⚙️ 下載核心與環境設定</h3>
-        <p style='margin-top: 0;'>切換到剛建立的伺服器後，前往<b>「核心與下載環境」</b>。本面板整合了 Paper、Vanilla 等官方來源。選擇您需要的版本並點擊下載。下載完成後，請前往<b>「屬性與世界設定」</b>調整您的伺服器 RAM 記憶體大小、最多遊玩人數、以及是否開啟正版驗證（Online Mode）。</p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>2. ⚙️ 下載核心與環境屬性</h3>
+        <p style='margin-top: 0;'>切換到伺服器後，前往<b>「核心與下載環境」</b>一鍵下載最新版 Paper 等官方來源。<br>接著至<b>「屬性與世界設定」</b>，透過圖形化介面輕鬆調配 RAM 記憶體大小、最多遊玩人數，存檔後系統將自動為您修改繁雜的 <code>server.properties</code> 檔案。</p>
 
-        <h3 style='color: #10B981; margin-bottom: 5px;'>3. 📦 安裝模組與插件</h3>
-        <p style='margin-top: 0;'>前往<b>「擴充資源市集」</b>，您可以直接輸入關鍵字搜尋 Modrinth 上的海量資源。找到喜歡的插件或模組後，點擊「安裝」即可自動下載並匯入伺服器的 mods 資料夾中。您也可以在同一個頁面管理或刪除已安裝的模組。</p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>3. 📦 擴充模組市集</h3>
+        <p style='margin-top: 0;'>在<b>「擴充資源市集」</b>，您可以直接搜尋 Modrinth 上的海量資源。找到喜歡的插件後點擊「安裝」即可自動匯入。您也可以管理或刪除已安裝的模組。</p>
 
-        <h3 style='color: #10B981; margin-bottom: 5px;'>4. 📟 啟動器與玩家管理</h3>
-        <p style='margin-top: 0;'>一切準備就緒後，前往<b>「伺服器控制台」</b>點擊「🚀 啟動伺服器」。啟動後，您可以在這裡輸入管理指令。若有玩家加入，您可以切換至<b>「玩家與權限管理」</b>，一鍵給予 OP、切換生存模式或進行踢出封鎖操作。</p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>4. 📟 伺服器啟動與玩家管理</h3>
+        <p style='margin-top: 0;'>前往<b>「伺服器控制台」</b>點擊「啟動伺服器」。啟動後，控制台會為您解析日誌，並可使用快捷鍵調配時間與氣候。若有玩家加入，更可至<b>「玩家與權限管理」</b>利用圖形按鈕一鍵給予 OP 或是切換創造模式。</p>
+        
+        <h3 style='color: #10B981; margin-bottom: 5px;'>5. 📅 地圖快照與自動備份</h3>
+        <p style='margin-top: 0;'><b>「地圖快照與備份」</b>不僅提供一鍵存檔還原功能，您還可以設定「每 N 小時自動備份」與「關機自動備份」。此機制在伺服器運行時也能發揮作用，並自動利用安全指令防止您的世界破檔。</p>
 
-        <h3 style='color: #10B981; margin-bottom: 5px;'>5. 🌐 FRP 內網穿透 (無實體 IP 解決方案)</h3>
-        <p style='margin-top: 0;'>如果您沒有固定 IP 或無法設定路由器，可以前往<b>「內網穿透與通道」</b>。請自行下載 <b>FRP 用戶端程式</b>，在面板介面中指定執行檔路徑與參數後點擊啟動，即可讓外網玩家透過代理連線到您的伺服器！<br>
-        <i>(若代理程式詢問帳號或密碼，在最下方的發送框打字並送出即可互動)</i></p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>6. 🌐 內網穿透 (FRP)</h3>
+        <p style='margin-top: 0;'>若您無法設定對外連接埠，請至<b>「內網穿透與通道」</b>綁定外部的代理程式。設定完參數後即可在面板背景安全執行！</p>
 
         <hr style='border: 0; border-top: 1px solid #373A40; margin: 25px 0;'>
 
@@ -2042,19 +2151,22 @@ class MainWindow(QMainWindow):
 
         txt_en = """<div style='line-height:2.0; font-size: 15px;'>
         <h3 style='color: #10B981; margin-bottom: 5px;'>1. 🗂️ Create Server & Management</h3>
-        <p style='margin-top: 0;'>Go to <b>Servers Management</b>, click Create Server and enter an alphanumeric name (e.g., MyServer). The system will create an isolated folder. You can create multiple servers and easily switch between them.</p>
+        <p style='margin-top: 0;'>Go to <b>Servers Management</b>, click Create Server and enter an alphanumeric name. The system will create an isolated folder. You can easily switch between them.</p>
 
         <h3 style='color: #10B981; margin-bottom: 5px;'>2. ⚙️ Download Core & Setup</h3>
-        <p style='margin-top: 0;'>Switch to your new server, then go to <b>Core Deploy & Downloads</b>. Select your preferred core (like Paper) and download it. Afterwards, go to <b>Server Properties</b> to configure RAM, player slots, and Online Mode.</p>
+        <p style='margin-top: 0;'>In <b>Core Deploy & Downloads</b>, download your preferred core (like Paper). Afterwards, go to <b>Server Properties</b> to configure RAM, player slots, and game modes via GUI sliders.</p>
 
         <h3 style='color: #10B981; margin-bottom: 5px;'>3. 📦 Install Mods & Plugins</h3>
-        <p style='margin-top: 0;'>In the <b>Marketplace</b>, you can search for resources on Modrinth. Click install to automatically download them to your server's mods folder.</p>
+        <p style='margin-top: 0;'>In the <b>Marketplace</b>, you can search for resources on Modrinth and click install to automatically download them to your server's mods folder.</p>
 
         <h3 style='color: #10B981; margin-bottom: 5px;'>4. 📟 Console & Player Control</h3>
-        <p style='margin-top: 0;'>Once ready, go to <b>Server Console</b> and click Start Instance. You can manage connected players in the <b>Players & Permissions</b> tab.</p>
+        <p style='margin-top: 0;'>Go to <b>Server Console</b> and click Start Instance. You can utilize quick command keys here. Furthermore, manage connected players dynamically in the <b>Players & Permissions</b> tab.</p>
+        
+        <h3 style='color: #10B981; margin-bottom: 5px;'>5. 📅 Automated Backups</h3>
+        <p style='margin-top: 0;'>In <b>World Backups</b>, you can zip compress your entire world. You can also set routine auto-backups or backup-on-shutdown features to keep your progress safe.</p>
 
-        <h3 style='color: #10B981; margin-bottom: 5px;'>5. 🌐 Network Tunnel (FRP)</h3>
-        <p style='margin-top: 0;'>If you don't have a public IP, use the <b>Network Tunnels</b> feature. Download an FRP client, select the executable, enter your arguments, and start the tunnel.</p>
+        <h3 style='color: #10B981; margin-bottom: 5px;'>6. 🌐 Network Tunnel (FRP)</h3>
+        <p style='margin-top: 0;'>If you don't have a public IP, use the <b>Network Tunnels</b> feature. Download an FRP client, select the executable, enter your arguments, and start the tunnel safely in the background.</p>
         <hr style='border: 0; border-top: 1px solid #373A40; margin: 25px 0;'>
 
         <h3 style='color: #E0E0E0; margin-bottom: 5px;'>[Open Source Spec]</h3>
@@ -2096,7 +2208,7 @@ class MainWindow(QMainWindow):
         lo.addStretch()
 
     # ==========================
-    # Global Events 系統匣駐留
+    # 關機與隱藏背景常駐管理
     # ==========================
     def show_close_dialog(self):
         w = QWidget()
@@ -2129,7 +2241,7 @@ class MainWindow(QMainWindow):
         lo_h.setSpacing(15)
         lo_h.addWidget(btn_min); lo_h.addWidget(btn_close); lo_h.addWidget(btn_cancel)
         l.addLayout(lo_h)
-        self.overlay.set_content(_tr("退出確認", "Exit Confirmation"), w, width=500, allow_close=False)
+        self.overlay.set_content(_tr("退出確認", "Exit Confirmation"), w, width=550, allow_close=False)
         self.overlay.show_modal()
 
     def hide_to_tray(self):
@@ -2142,7 +2254,6 @@ class MainWindow(QMainWindow):
         self.hide()
         
         wait_time = 100
-        
         if self.server_thread and self.server_thread.isRunning():
             self.server_thread.stop_server()
             wait_time = 5000 
@@ -2164,10 +2275,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     
-    # 🟢 修正：關閉最後一個視窗時不會強制終止程式 (系統匣才不會跟著被強制殺掉)
     app.setQuitOnLastWindowClosed(False)
     
-    # 🟢 修正：強制賦予現代平滑無鋸齒字體，避免呼叫點陣字型 (Fixedsys) 報錯
     font = app.font()
     font.setFamily("Segoe UI") 
     font.setPointSize(10)
