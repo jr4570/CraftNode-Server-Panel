@@ -42,7 +42,7 @@ It features one-click core downloads, built-in Modrinth integration, live player
 
 **1. Clone the repository:**
 ```bash
-git clone [https://github.com/YourUsername/CraftNode-Server-Panel.git](https://github.com/YourUsername/CraftNode-Server-Panel.git)
+git clone [https://github.com/jr4570/CraftNode-Server-Panel.git](https://github.com/jr4570/CraftNode-Server-Panel.git)
 cd CraftNode-Server-Panel
 ```
 
