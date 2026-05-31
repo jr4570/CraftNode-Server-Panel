@@ -18,9 +18,8 @@
 
 我們為您提供了一鍵核心下載、內建 Modrinth 模組庫、即時玩家管理、圖形化屬性設定，以及無縫整合的 FRP 內網穿透互動介面，讓開服變得前所未有的簡單。
 
-> **📸 面板預覽**
-> *(建議在此處插入一張面板首頁的截圖)*
-> `![Dashboard Screenshot](在此放入您的圖片網址)`
+### 📸 面板預覽
+[![Dashboard Screenshot](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image.png?raw=true)](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image.png?raw=true)
 
 ### ✨ 核心功能
 
