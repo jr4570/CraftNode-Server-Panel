@@ -593,7 +593,7 @@ class TutorialContent(QWidget):
         t4.setTextFormat(Qt.TextFormat.RichText)
         l4.addWidget(t4)
         desc4 = QLabel(_tr(
-            "最後，在<b>「伺服器控制台」</b>打火啟動！<br><br>"
+            "最後，在<b>「伺服器控制台」</b>啟動！<br><br>"
             "您可以在「擴充資源市集」自由安裝模組；在「地圖快照與備份」設定自動存檔防呆機制。<br>"
             "若沒有實體 IP，還能透過「內網穿透」輕鬆與世界連線。準備好開始您的冒險了嗎？",
             "Finally, ignite your server in the <b>Server Console</b>!<br><br>"
@@ -704,7 +704,7 @@ class EulaContent(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(_tr("CraftNode 伺服器管理面板 - 開源最終版", "CraftNode Server Panel - Open Source Edition"))
+        self.setWindowTitle(_tr("CraftNode 伺服器管理面板", "CraftNode Server Panel"))
         self.resize(1380, 900)
         self.setStyleSheet(get_stylesheet(APP_CONFIG["is_dark"]))
         
