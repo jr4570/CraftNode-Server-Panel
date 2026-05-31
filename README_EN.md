@@ -20,8 +20,6 @@ It features one-click core downloads, built-in Modrinth integration, live player
 
 ### 📸 Dashboard Preview
 
-[![Dashboard Screenshot](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image2.png?raw=true)](https://github.com/jr4570/CraftNode-Server-Panel/blob/main/PNG/image2.png?raw=true)
-
 ### ✨ Features
 
 * **🗂️ Multi-Workspace Management**: Create isolated server directories. Switch between different versions and ecosystems seamlessly without file conflicts.
