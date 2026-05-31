@@ -12,7 +12,7 @@
 
 ---
 
-## 🇺🇸 English
+## English
 
 **CraftNode** is a modern, lightweight Minecraft server management panel built with Python and PySide6. It is designed for server owners who need a fast, elegant, and hassle-free way to deploy and manage multiple servers.
 
