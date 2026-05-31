@@ -41,7 +41,7 @@
 
 **1. 取得程式碼：**
 ```bash
-git clone [https://github.com/YourUsername/CraftNode-Server-Panel.git](https://github.com/YourUsername/CraftNode-Server-Panel.git)
+git clone [https://github.com/jr4570/CraftNode-Server-Panel.git](https://github.com/jr4570/CraftNode-Server-Panel.git)
 cd CraftNode-Server-Panel
 ```
 
